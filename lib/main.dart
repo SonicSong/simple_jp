@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:is_first_run/is_first_run.dart';
+import 'package:simple_jp/src/addPhrase.dart';
+import 'package:simple_jp/src/settings.dart';
 
 import 'src/database.dart';
+import 'src/start.dart';
+import 'src/addPhrase.dart';
 import 'src/kana_convert.dart';
 import 'src/translation.dart';
+import 'src/settings.dart';
 
 void main() {
   runApp(const MyApp());
@@ -17,11 +22,10 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Japońskie Rozmówki',
-      theme: ThemeData(
-
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.redAccent),
-        useMaterial3: true,
-      ),
+      theme: ThemeData.light(),
+      darkTheme: ThemeData.dark(),
+      themeMode: ThemeMode.system,
+      debugShowCheckedModeBanner: true,
       home: const MyHomePage(title: 'Japońskie Rozmówki'),
     );
   }
@@ -52,7 +56,7 @@ class _MyHomePageState extends State<MyHomePage> {
       _isFirstRun = ifr;
     });
     if (_isFirstRun == true) {
-      _CreateDatabase();
+      // _CreateDatabase();
       // await _CreateDB();
     }
   }
@@ -61,7 +65,9 @@ class _MyHomePageState extends State<MyHomePage> {
 
   static List<Widget> _widgetOptions = <Widget>[
     // Add your widgets here
-
+    Start(),
+    addPhrase(),
+    Settings(),
   ];
 
   void _onItemTapped(int index) {
@@ -72,18 +78,32 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    _checkFirstRun();
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text(widget.title),
-      ),
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-
-          ],
-        ),
+        child: _widgetOptions.elementAt(_selectedIndex),
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        type:BottomNavigationBarType.shifting,
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: 'Strona Główna',
+            backgroundColor: Colors.blue
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.add),
+            label: 'Dodawanie Fraz',
+            backgroundColor: Colors.green
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.settings),
+            label: 'Ustawienia',
+            backgroundColor: Colors.grey
+          ),
+        ],
+          currentIndex: _selectedIndex,
+          onTap: _onItemTapped,
       ),
     );
   }

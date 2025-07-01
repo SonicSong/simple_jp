@@ -24,7 +24,7 @@ class SqlDbCreate {
 
   Future<List<Map<String, Object?>>> addQuestion(String category, String plText, String jpText, String romaji, String note) async {
     final database = await initializeDatabase();
-    return await database.rawQuery('INSERT INTO phrases(category, pl_text, jp_text, romaji, notes) VALUES (?, ?, ?, ?, ?)', [category, plText, jpText, romaji, note]);
+    return await database.rawQuery('INSERT INTO phrases(category, pl_text, jp_text, romaji, notes) VALUES (SELECT id FROM categories WHERE category = ?), ?, ?, ?, ?)', [category, plText, jpText, romaji, note]);
   }
 }
 
