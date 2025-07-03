@@ -6,6 +6,8 @@ import 'package:sqflite/sqflite.dart';
 
 //TODO: Implement database integration to store, write and read mood "diary"
 
+const List<String> list = <String>['Directions', ];
+
 class addPhrase extends StatelessWidget {
   Future<void> addNewPhrase(String category, String plText, String jpText, String romaji, String note) async {
 
@@ -14,7 +16,7 @@ class addPhrase extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: <Widget>[
         Padding(
           padding: EdgeInsets.symmetric(horizontal: 16, vertical: 50),
@@ -26,6 +28,28 @@ class addPhrase extends StatelessWidget {
           )
         )
       ],
+    );
+  }
+}
+
+class dropDownMenu extends StatefulWidget {
+  const dropDownMenu({super.key});
+
+  @override
+  State<dropDownMenu> createState() => _dropDownMenuCategory();
+}
+
+class _dropDownMenuCategory extends State<dropDownMenu> {
+
+
+  @override
+  Widget build(BuildContext context) {
+    return DropdownMenu<String>(
+      initialSelection: list.first,
+      onSelected: (String? value) {
+
+      },
+      dropdownMenuEntries: [],
     );
   }
 }
