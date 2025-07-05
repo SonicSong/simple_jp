@@ -14,9 +14,12 @@ void main() {
   runApp(const MyApp());
 }
 
+ThemeMode themeMode = ThemeMode.system;
+
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
+  // final ThemeMode themeMode = ThemeMode.system;
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
@@ -24,8 +27,8 @@ class MyApp extends StatelessWidget {
       title: 'Japońskie Rozmówki',
       theme: ThemeData.light(),
       darkTheme: ThemeData.dark(),
-      themeMode: ThemeMode.system,
-      debugShowCheckedModeBanner: true,
+      themeMode: themeMode,
+      debugShowCheckedModeBanner: false,
       home: const MyHomePage(title: 'Japońskie Rozmówki'),
     );
   }
