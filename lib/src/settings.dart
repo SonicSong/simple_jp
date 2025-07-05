@@ -8,13 +8,19 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'database.dart';
 
 class Settings extends StatelessWidget {
+
+  bool darkMode = false;
+
+  Future<void> saveDataOptions() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+  }
+
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(
       body: Center(
-        child: Text('Why does the particle warp?'),
-
+        // child: Switch(value: darkMode, onChanged: (bool value) (darkMode = )),
       ),
     );
   }
