@@ -37,6 +37,7 @@ dependencies:
   sqflite: ^2.2.0
   kana_kit: ^2.1.0
   google_mlkit_translation: ^0.13.0
+  shared_preferences: ^2.5.0
   is_first_run: 1.0.0
 
 dev_dependencies:
