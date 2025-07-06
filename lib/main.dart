@@ -16,6 +16,12 @@ void main() {
 
 ThemeMode themeMode = ThemeMode.system;
 
+const List<String> list_EN = <String>['Directions',  'Polite phrases', 'Greetings and goodbyes', 'Requests, commands, offers',
+  'Questions', 'Personal data', 'Identity documents and documents '];
+const List<String> list_PL = <String>['Kierunki', 'Zwroty grzecznościowe', 'Powitania i pożegnania', 'Prośby, polecenia, propozycje',
+  'Pytania', 'Dane osobowe', 'Dokumenty tożsamości i dokumenty'];
+
+
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 

@@ -4,10 +4,7 @@ import 'package:flutter/widgets.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
-//TODO: Implement database integration to store, write and read mood "diary"
-
-const List<String> list_EN = <String>['Directions', ];
-const List<String> list_PL = <String>['Kierunki', ];
+import '../main.dart';
 
 class addPhrase extends StatelessWidget {
   Future<void> addNewPhrase(String category, String plText, String jpText, String romaji, String note) async {
@@ -41,8 +38,6 @@ class dropDownMenu extends StatefulWidget {
 }
 
 class _dropDownMenuCategory extends State<dropDownMenu> {
-
-
   @override
   Widget build(BuildContext context) {
     return DropdownMenu<String>(
