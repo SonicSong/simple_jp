@@ -1,33 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
-class Start extends StatelessWidget {
+import 'database.dart';
 
+class Start extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // return Scaffold(
-    //   body: Center(
-    //     child: Column(
-    //       mainAxisAlignment: MainAxisAlignment.center,
-    //       children: [
-    //         Text('Text 1'),
-    //         Text('Text 2'),
-    //         Text('Text 3'),
-    //       ],
-    //     ),
-    //   ),
-    // );
-    
-    return CustomScrollView(scrollDirection: Axis.horizontal,
-    slivers: [
-      SliverList(delegate: SliverChildListDelegate.fixed([
-
-      ]))
-    ],);
+    return Column(
+      children: [
+        Expanded(
+            child: ListView.builder(
+              shrinkWrap: true,
+              itemBuilder: (context, index) {
+                return phraseButtonGet();
+              },
+            )
+        )
+      ],
+    );
   }
 }
-
 
 //constructor for "buttons" that would contain the phrases from QuestionsDB.db
 class phraseButtonGet extends StatefulWidget {
@@ -38,9 +31,48 @@ class phraseButtonGet extends StatefulWidget {
 }
 
 class _PhraseButtonGet extends State<phraseButtonGet> {
+  Map<String, dynamic>? _phrases;
+
+  @override
+  void initState() {
+    super.initState();
+    _fetchQuestionsDB();
+  }
+
+  Future<void> _fetchQuestionsDB() async {
+    final phrases = await SqlDbCreate().getQuestions();
+    setState(() {
+      _phrases = phrases.isNotEmpty ? phrases.first : null;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
-    return Text("BUTTON JP");
+    return Scaffold(
+      body: Center(
+        child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: _phrases == null ? CircularProgressIndicator() : Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  _phrases!['pl_text'] ?? 'No phrase found',
+                  textAlign: TextAlign.left,
+                  style: TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                  )
+                ),
+                Text(
+                  "${_phrases!['notes'] ?? ''}",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(fontSize: 18)
+                ),
+              ],
+            )
+        )
+      )
+    );
   }
 }

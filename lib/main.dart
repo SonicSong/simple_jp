@@ -58,6 +58,7 @@ class _MyHomePageState extends State<MyHomePage> {
       print('Error creating database: $e');
     }
   }
+
   bool? _isFirstRun;
   void _checkFirstRun() async {
     bool ifr = await IsFirstRun.isFirstRun();
@@ -65,8 +66,8 @@ class _MyHomePageState extends State<MyHomePage> {
       _isFirstRun = ifr;
     });
     if (_isFirstRun == true) {
-      // _CreateDatabase();
-      // await _CreateDB();
+      _CreateDatabase();
+      await SqlDbCreate().initializeDatabase();
     }
   }
 
