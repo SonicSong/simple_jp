@@ -1,5 +1,7 @@
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
+import 'package:flutter/services.dart';
+import 'package:path_provider/path_provider.dart';
 
 class SqlDbCreate {
   Future<List<Map<String, Object?>>> getQuestions() async {
@@ -8,13 +10,11 @@ class SqlDbCreate {
   }
 
   Future<Database> initializeDatabase() async {
-    String path = await getDatabasesPath();
+    final docDir = await getApplicationDocumentsDirectory();
 
     return await openDatabase(
-        join(path, './QuestionsDB.db'),
-        onCreate: (database, version) async {
-          await database.execute('');
-    });
+        join(docDir.path, 'QuestionsDB.db')
+    );
   }
 
   Future<List<Map<String, Object?>>> getQuestionsByCategory(String category) async {
