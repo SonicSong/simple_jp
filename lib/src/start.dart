@@ -65,7 +65,7 @@ class _PhraseButtonGet extends State<phraseButtonGet> {
                   )
                 ),
                 Text(
-                  "${_phrases!['notes'] ?? ''}",
+                  "${_phrases!['notes'] ?? 'No notes found'}",
                   textAlign: TextAlign.center,
                   style: TextStyle(fontSize: 18)
                 ),

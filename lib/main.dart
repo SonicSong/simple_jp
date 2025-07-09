@@ -50,24 +50,22 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  Future<void> _CreateDatabase() async {
-    try {
-      await SqlDbCreate().initializeDatabase();
-      print ('Database created successfully');
-    } catch (e) {
-      print('Error creating database: $e');
-    }
+  bool? _isFirstRun;
+
+  @override
+  void initState() {
+    super.initState();
+    _checkFirstRun();
   }
 
-  bool? _isFirstRun;
   void _checkFirstRun() async {
     bool ifr = await IsFirstRun.isFirstRun();
     setState(() {
       _isFirstRun = ifr;
     });
-    if (_isFirstRun == true) {
-      _CreateDatabase();
+    if (ifr) {
       await SqlDbCreate().initializeDatabase();
+      print("DB loaded.");
     }
   }
 
@@ -88,7 +86,6 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    _checkFirstRun();
     return Scaffold(
       body: Center(
         child: _widgetOptions.elementAt(_selectedIndex),
