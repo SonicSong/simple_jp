@@ -51,12 +51,12 @@ class SqlDbCreate {
     return await openDatabase(dbPath);
   }
 
-  Future<List<Map<String, Object?>>> getQuestionsByCategory(String category) async {
+  Future<List<Map<String, dynamic>>> getQuestionsByCategory(String category) async {
     final database = await initializeDatabase();
     return await database.rawQuery('SELECT * FROM phrases WHERE category = ?', [category]);
   }
 
-  Future<List<Map<String, Object?>>> addQuestion(String category, String plText, String jpText, String romaji, String note) async {
+  Future<List<Map<String, dynamic>>> addQuestion(String category, String plText, String jpText, String romaji, String note) async {
     final database = await initializeDatabase();
     return await database.rawQuery('INSERT INTO phrases(category, pl_text, jp_text, romaji, notes) VALUES (SELECT id FROM categories WHERE category = ?), ?, ?, ?, ?)', [category, plText, jpText, romaji, note]);
   }

@@ -10,12 +10,7 @@ class Start extends StatelessWidget {
     return Column(
       children: [
         Expanded(
-            child: ListView.builder(
-              shrinkWrap: true,
-              itemBuilder: (context, index) {
-                return phraseButtonGet();
-              },
-            )
+            child: phraseButtonGet()
         )
       ],
     );
@@ -31,7 +26,7 @@ class phraseButtonGet extends StatefulWidget {
 }
 
 class _PhraseButtonGet extends State<phraseButtonGet> {
-  Map<String, dynamic>? _phrases;
+  List<Phrase>? _phrases;
 
   @override
   void initState() {
@@ -40,39 +35,45 @@ class _PhraseButtonGet extends State<phraseButtonGet> {
   }
 
   Future<void> _fetchQuestionsDB() async {
-    final phrases = await SqlDbCreate().getQuestions();
-    setState(() {
-      _phrases = phrases.isNotEmpty ? phrases.first : null;
-    });
+    final mapping = await SqlDbCreate().getQuestions();
+
+    if (mapping.isNotEmpty) {
+      setState(() {
+        _phrases = mapping.map(Phrase.fromMap).toList();
+      });
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return Scaffold(
       body: Center(
         child: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: _phrases == null ? CircularProgressIndicator() : Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  _phrases!['pl_text'] ?? 'No phrase found',
-                  textAlign: TextAlign.left,
-                  style: TextStyle(
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
-                  )
+          padding: const EdgeInsets.fromLTRB(2, 20, 2, 0),
+          child: _phrases == null
+              ? CircularProgressIndicator()
+              : ListView.builder(
+            padding: const EdgeInsets.all(16),
+            itemCount: _phrases!.length,
+            itemBuilder: (ctx, idx) {
+              final p = _phrases![idx];
+              return Padding(
+                padding: const EdgeInsets.all(0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(p.plText, style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+                    Text(p.jpText, style: TextStyle(fontSize: 18, fontStyle: FontStyle.italic)),
+                    Text(p.romaji, style: TextStyle(fontSize: 16, color: Colors.grey[600])),
+                    Text(p.notes, style: TextStyle(fontSize: 16)),
+                    Divider(),
+                  ],
                 ),
-                Text(
-                  "${_phrases!['notes'] ?? 'No notes found'}",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(fontSize: 18)
-                ),
-              ],
-            )
-        )
-      )
+              );
+              },
+          ),
+        ),
+      ),
     );
   }
 }
