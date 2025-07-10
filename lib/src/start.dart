@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 import 'database.dart';
+import 'buttonBox.dart';
 
 class Start extends StatelessWidget {
 
@@ -57,18 +58,34 @@ class _PhraseButtonGet extends State<phraseButtonGet> {
             itemCount: _phrases!.length,
             itemBuilder: (ctx, idx) {
               final p = _phrases![idx];
-              return Padding(
-                padding: const EdgeInsets.all(0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(p.plText, style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-                    Text(p.jpText, style: TextStyle(fontSize: 18, fontStyle: FontStyle.italic)),
-                    Text(p.romaji, style: TextStyle(fontSize: 16, color: Colors.grey[600])),
-                    Text(p.notes, style: TextStyle(fontSize: 16)),
-                    Divider(),
-                  ],
-                ),
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  InkWell(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => ButtonBox(phrase: p),
+                        ),
+                      );
+                      // print('Tapped ${p.id}');
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.all(0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(p.plText, style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+                          Text(p.jpText, style: TextStyle(fontSize: 18, fontStyle: FontStyle.italic)),
+                          Text(p.romaji, style: TextStyle(fontSize: 16, color: Colors.grey[600])),
+                          // Text(p.notes, style: TextStyle(fontSize: 16)),
+                          Divider(thickness: 2.0,),
+                        ],
+                      ),
+                    )
+                  )
+                ],
               );
               },
           ),
