@@ -3,33 +3,35 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 import 'database.dart';
+import 'kana_convert.dart';
 
 class TranslationClass {
-  Future<String> Translate(text) async {
-    final TranslateLanguage sourceLanguage;
-    final TranslateLanguage targetLanguage;
+  late final OnDeviceTranslator _translator;
 
-    final onDeviceTranslator = OnDeviceTranslator(sourceLanguage: TranslateLanguage.japanese, targetLanguage: TranslateLanguage.polish);
-
-    final String response = await onDeviceTranslator.translateText(text);
-
-    return response;
+  TranslationClass() {
+    _translator = OnDeviceTranslator(
+      sourceLanguage: TranslateLanguage.japanese,
+      targetLanguage: TranslateLanguage.polish,
+    );
   }
 
-  Future<void> modelCheck() async {
+  Future<void> ensureModelDownloaded() async {
     final modelManager = OnDeviceTranslatorModelManager();
-    final bool response1 = await modelManager.isModelDownloaded(TranslateLanguage.polish.bcpCode);
-    final bool response2 = await modelManager.isModelDownloaded(TranslateLanguage.japanese.bcpCode);
-
-    print('Response one PL ${response1}');
-    print('Response two JP ${response2}');
-
-    if (response1 == false && response2 == false) {
-      final bool responseDlPL = await modelManager.downloadModel(TranslateLanguage.polish.bcpCode);
-      final bool responseDlJP = await modelManager.downloadModel(TranslateLanguage.japanese.bcpCode);
-
-      print('Response download PL ${responseDlPL}');
-      print('Response download JP ${responseDlJP}');
+    if (!await modelManager.isModelDownloaded(TranslateLanguage.polish.bcpCode)) {
+      await modelManager.downloadModel(TranslateLanguage.polish.bcpCode);
     }
+    if (!await modelManager.isModelDownloaded(TranslateLanguage.japanese.bcpCode)) {
+      await modelManager.downloadModel(TranslateLanguage.japanese.bcpCode);
+    }
+  }
+
+  Future<String> translateText(String input) async {
+    final kanaText = await KanaConvert().isItKana(input);
+    final result = await _translator.translateText(kanaText);
+    return result;
+  }
+
+  void dispose() {
+    _translator.close();
   }
 }

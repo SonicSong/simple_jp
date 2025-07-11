@@ -16,8 +16,28 @@ class ButtonBox extends StatefulWidget {
 
 
 class _ButtonBoxState extends State<ButtonBox> {
- String _currentInput = '';
- String _outputOfTranslation = '';
+  final TranslationClass _translator = TranslationClass();
+  String _currentInput = '';
+  String _outputOfTranslation = '';
+
+  @override
+  void initState() {
+    super.initState();
+    _translator.ensureModelDownloaded();
+  }
+
+  @override
+  void dispose() {
+    _translator.dispose();
+    super.dispose();
+  }
+
+  Future<void> _handleSubmit(String? submitted) async {
+    final text = submitted?.isNotEmpty == true ? submitted! : _currentInput;
+    final translated = await _translator.translateText(text);
+    if (!mounted) return;
+    setState(() => _outputOfTranslation = translated);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -40,29 +60,20 @@ class _ButtonBoxState extends State<ButtonBox> {
                   border: OutlineInputBorder(),
                   hintText: 'ここに答えを入力してください'
                 ),
-                onChanged: (text) {
-                  setState(() => _currentInput = text);
-                },
-                onSubmitted: (text) {
-                  setState(() => _currentInput = text);
-                  _handleSubmit(_currentInput);
-                },
+                onChanged: (text) => _currentInput = text,
+                onSubmitted: (text) => _handleSubmit(_currentInput),
               ),
               const SizedBox(height: 16),
               ElevatedButton(
-                onPressed: () => _handleSubmit(_currentInput),
+                onPressed: () => _handleSubmit(null),
                 child: const Text('Przetłumacz'),
               ),
               SizedBox(height: 12),
-              Text("AHAHAHAHAH")
+              Text(_outputOfTranslation)
             ],
           ),
         ),
       ),
     );
   }
-
- void _handleSubmit(String answer) {
-   print(answer);
- }
 }

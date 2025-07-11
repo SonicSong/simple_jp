@@ -63,7 +63,7 @@ class _MyHomePageState extends State<MyHomePage> {
     });
     if (ifr) {
       await SqlDbCreate().initializeDatabase();
-      await TranslationClass().modelCheck();
+      await TranslationClass().ensureModelDownloaded();
       print("DB loaded.");
     }
   }
