@@ -25,8 +25,6 @@ const List<String> list_PL = <String>['Kierunki', 'Zwroty grzecznościowe', 'Pow
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // final ThemeMode themeMode = ThemeMode.system;
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(

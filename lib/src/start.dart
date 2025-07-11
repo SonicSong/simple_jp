@@ -69,7 +69,6 @@ class _PhraseButtonGet extends State<phraseButtonGet> {
                           builder: (context) => ButtonBox(phrase: p),
                         ),
                       );
-                      // print('Tapped ${p.id}');
                     },
                     child: Padding(
                       padding: const EdgeInsets.all(0),

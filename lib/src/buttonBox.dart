@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 import 'database.dart';
+import 'translation.dart';
 
 class ButtonBox extends StatelessWidget {
   final Phrase phrase;
@@ -17,13 +18,11 @@ class ButtonBox extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(phrase.plText, style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
+            Text(phrase.jpText, style: TextStyle(fontSize: 30, fontStyle: FontStyle.italic, fontWeight: FontWeight.bold)),
             SizedBox(height: 12),
-            Text(phrase.jpText, style: TextStyle(fontSize: 30, fontStyle: FontStyle.italic)),
-            SizedBox(height: 12),
-            Text(phrase.romaji, style: TextStyle(fontSize: 18, color: Colors.grey[700])),
+            Text(phrase.romaji, style: TextStyle(fontSize: 20)),
             SizedBox(height: 16),
-            Text(phrase.notes, style: TextStyle(fontSize: 18)),
+            Text(phrase.notes, style: TextStyle(fontSize: 16)),
             SizedBox(height: 16,),
             Text('HERE GOES THE TRANSLATION', style: TextStyle(fontSize: 30)),
           ],
