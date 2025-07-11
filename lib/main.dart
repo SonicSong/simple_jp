@@ -55,7 +55,7 @@ class _MyHomePageState extends State<MyHomePage> {
     super.initState();
     _checkFirstRun();
   }
-
+  
   void _checkFirstRun() async {
     bool ifr = await IsFirstRun.isFirstRun();
     setState(() {
@@ -63,6 +63,7 @@ class _MyHomePageState extends State<MyHomePage> {
     });
     if (ifr) {
       await SqlDbCreate().initializeDatabase();
+      await TranslationClass().modelCheck();
       print("DB loaded.");
     }
   }
