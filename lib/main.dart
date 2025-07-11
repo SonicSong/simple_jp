@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:is_first_run/is_first_run.dart';
-import 'package:simple_jp/src/addPhrase.dart';
-import 'package:simple_jp/src/settings.dart';
+import 'package:google_mlkit_translation/google_mlkit_translation.dart';
+
 
 import 'src/database.dart';
 import 'src/start.dart';
@@ -85,6 +85,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(title: Text("Japońskie rozmówki")),
       body: IndexedStack(
         index: _selectedIndex,
         children: _widgetOptions,

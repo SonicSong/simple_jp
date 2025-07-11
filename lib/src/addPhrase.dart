@@ -17,7 +17,7 @@ class addPhrase extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: <Widget>[
         Padding(
-          padding: EdgeInsets.symmetric(horizontal: 16, vertical: 50),
+          padding: EdgeInsets.symmetric(horizontal: 16),
           child: TextFormField(
             decoration: const InputDecoration(
               border: UnderlineInputBorder(),

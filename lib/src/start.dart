@@ -50,7 +50,7 @@ class _PhraseButtonGet extends State<phraseButtonGet> {
     return Scaffold(
       body: Center(
         child: Padding(
-          padding: const EdgeInsets.fromLTRB(2, 20, 2, 0),
+          padding: const EdgeInsets.fromLTRB(2, 0, 2, 0),
           child: _phrases == null
               ? CircularProgressIndicator()
               : ListView.builder(
