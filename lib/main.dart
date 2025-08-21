@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:is_first_run/is_first_run.dart';
-import 'package:google_mlkit_translation/google_mlkit_translation.dart';
-
 
 import 'src/database.dart';
 import 'src/start.dart';
 import 'src/addPhrase.dart';
-import 'src/kana_convert.dart';
 import 'src/translation.dart';
 import 'src/settings.dart';
 
@@ -16,11 +13,18 @@ void main() {
 
 ThemeMode themeMode = ThemeMode.system;
 
-const List<String> list_EN = <String>['Directions',  'Polite phrases', 'Greetings and goodbyes', 'Requests, commands, offers',
-  'Questions', 'Personal data', 'Identity documents and documents '];
-const List<String> list_PL = <String>['Kierunki', 'Zwroty grzecznościowe', 'Powitania i pożegnania', 'Prośby, polecenia, propozycje',
-  'Pytania', 'Dane osobowe', 'Dokumenty tożsamości i dokumenty'];
+const List<String> list_EN = <String>["Directions", "Basic Questions", "Travel", "Accommodation", "Food & Ordering", "Shopping", "Numbers & Quantity",
+"Health & Emergencies", "Language & Communication", "Misc / Politeness"];
 
+const List<String> list_PL = <String>["Wskazówki", "Podstawowe pytania", "Podróż", "Zakwaterowanie", "Jedzenie i zamawianie", "Zakupy", "Liczby i ilości",
+"Zdrowie i nagłe wypadki", "Język i komunikacja", "Różne / Grzeczność"];
+
+
+const List<String> list_EN_cat = <String>["All" ,"Directions", "Basic Questions", "Travel", "Accommodation", "Food & Ordering", "Shopping", "Numbers & Quantity",
+  "Health & Emergencies", "Language & Communication", "Misc / Politeness"];
+
+const List<String> list_PL_cat = <String>["Wszystko", "Wskazówki", "Podstawowe pytania", "Podróż", "Zakwaterowanie", "Jedzenie i zamawianie", "Zakupy", "Liczby i ilości",
+  "Zdrowie i nagłe wypadki", "Język i komunikacja", "Różne / Grzeczność"];
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -70,8 +74,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   int _selectedIndex = 0;
 
-  static List<Widget> _widgetOptions = <Widget>[
-    // Add your widgets here
+  static final List<Widget> _widgetOptions = <Widget>[
     Start(),
     addPhrase(),
     Settings(),

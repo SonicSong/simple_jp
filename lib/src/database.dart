@@ -61,14 +61,3 @@ class SqlDbCreate {
     return await database.rawQuery('INSERT INTO phrases(category, pl_text, jp_text, romaji, notes) VALUES (SELECT id FROM categories WHERE category = ?), ?, ?, ?, ?)', [category, plText, jpText, romaji, note]);
   }
 }
-
-//For making requests to the database make use of category to not pull too much data at once. For example use 'Directions' to get all questions related to directions and not all questions.
-
-//Example of question
-// {
-// "category": "Directions",
-// "pl_text": "Gdzie jest sklep?",
-// "jp_text": "コンビニはどこにありますか？",
-// "romaji": "Konbini wa doko ni arimasu ka?"
-// "notes": "Use this phrase when asking for the location of a convenience store."
-// },

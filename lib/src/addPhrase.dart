@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:flutter/widgets.dart';
-import 'package:path/path.dart';
-import 'package:sqflite/sqflite.dart';
 
 import '../main.dart';
 
@@ -18,26 +16,21 @@ class addPhrase extends StatelessWidget {
       children: <Widget>[
         Padding(
           padding: EdgeInsets.symmetric(horizontal: 16),
-          child: TextFormField(
-            decoration: const InputDecoration(
-              border: UnderlineInputBorder(),
-              labelText: 'Podaj kategorię',
-            ),
+          child: Drop_DownMenu(),
           )
-        )
       ],
     );
   }
 }
 
-class dropDownMenu extends StatefulWidget {
-  const dropDownMenu({super.key});
+class Drop_DownMenu extends StatefulWidget {
+  const Drop_DownMenu({super.key});
 
   @override
-  State<dropDownMenu> createState() => _dropDownMenuCategory();
+  State<Drop_DownMenu> createState() => _DropDownMenu();
 }
 
-class _dropDownMenuCategory extends State<dropDownMenu> {
+class _DropDownMenu extends State<Drop_DownMenu> {
   @override
   Widget build(BuildContext context) {
     return DropdownMenu<String>(
@@ -45,7 +38,13 @@ class _dropDownMenuCategory extends State<dropDownMenu> {
       onSelected: (String? value) {
 
       },
-      dropdownMenuEntries: [],
+      dropdownMenuEntries: List.generate(
+        list_EN.length,
+            (index) => DropdownMenuEntry<String>(
+          value: list_EN[index],
+          label: list_PL[index],
+        ),
+      ),
     );
   }
 }
