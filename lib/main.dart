@@ -76,7 +76,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   static final List<Widget> _widgetOptions = <Widget>[
     Start(),
-    addPhrase(),
+    AddPhrase(),
     Settings(),
   ];
 

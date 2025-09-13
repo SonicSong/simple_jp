@@ -37,7 +37,7 @@ class SqlDbCreate {
     return await database.query('phrases');
   }
 
-  Future<Database> initializeDatabase() async {
+  Future<Database>  initializeDatabase() async {
     final docDir = await getApplicationDocumentsDirectory();
     final dbPath = join(docDir.path, 'QuestionsDB.db');
 
@@ -47,17 +47,28 @@ class SqlDbCreate {
       final bytes = data.buffer.asUint8List();
       await File(dbPath).writeAsBytes(bytes, flush: true);
     }
-    
+
     return await openDatabase(dbPath);
   }
 
-  Future<List<Map<String, dynamic>>> getQuestionsByCategory(String category) async {
+  Future<List<Map<String, dynamic>>> getQuestionsByCategory(
+      String category) async {
     final database = await initializeDatabase();
-    return await database.rawQuery('SELECT * FROM phrases WHERE category = ?', [category]);
+    return await database.rawQuery(
+        'SELECT * FROM phrases WHERE category = ?', [category]);
   }
 
-  Future<List<Map<String, dynamic>>> addQuestion(String category, String plText, String jpText, String romaji, String note) async {
+  // Future<List<Map<String, dynamic>>> addQuestion(String category, String plText, String jpText, String romaji, String note) async {
+  //   final database = await initializeDatabase();
+  //   return await database.rawQuery('INSERT INTO phrases(category, pl_text, jp_text, romaji, notes) VALUES (SELECT id FROM categories WHERE category = ?), ?, ?, ?, ?)', [category, plText, jpText, romaji, note]);
+  // }
+
+  Future<void> addQuestion(String category, String plText, String jpText,
+      String romaji, String note) async {
     final database = await initializeDatabase();
-    return await database.rawQuery('INSERT INTO phrases(category, pl_text, jp_text, romaji, notes) VALUES (SELECT id FROM categories WHERE category = ?), ?, ?, ?, ?)', [category, plText, jpText, romaji, note]);
+    await database.rawInsert('''
+    INSERT INTO phrases (category, pl_text, jp_text, romaji, notes)
+    VALUES ((SELECT id FROM categories WHERE category = ?), ?, ?, ?, ?)
+  ''', [category, plText, jpText, romaji, note]);
   }
 }
